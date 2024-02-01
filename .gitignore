@@ -1,3 +1,7 @@
+w1/docker/ny_taxi_postgres_data
+w1/docker/data_pgadmin
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
