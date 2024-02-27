@@ -11,6 +11,9 @@ Try running the following commands:
 - https://hub.getdbt.com
 - dbt deps
 
+### Setting variables from the terminal
+- dbt build --select stg_green_tripdata --vars '{'is_test_run': 'false'}'
+
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
 - Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
