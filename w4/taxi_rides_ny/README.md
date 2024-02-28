@@ -11,13 +11,13 @@ Try running the following commands:
 - https://hub.getdbt.com
 - dbt deps
 
-### Setting variables from the terminal
+#### Setting variables from the terminal
 - dbt build --select stg_green_tripdata --vars '{'is_test_run': 'false'}'
 
-### Run upstream and downstream models
+#### Run upstream and downstream models
 - dbt run --select +fact_trips+
 
-### Generate model yaml code
+#### Generate model yaml code
 - Add [codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/) to packages.yml
 ```sql
 {% set models_to_generate = codegen.get_models(directory='marts', prefix='fct_') %}
@@ -27,6 +27,9 @@ Try running the following commands:
 ```
 - Compile
 - Copy the generatd model schema from the output into model/staging/schema.sql
+
+#### Generate docs
+- dbt docs generate
 
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
