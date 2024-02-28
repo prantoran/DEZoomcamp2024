@@ -31,6 +31,9 @@ Try running the following commands:
 #### Generate docs
 - dbt docs generate
 
+#### Analyze using DataStudio after job pushes to production environment
+- https://lookerstudio.google.com
+
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
 - Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
