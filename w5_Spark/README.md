@@ -62,3 +62,7 @@ df = spark.read \
 
 df.show()
 ```
+- View Spark jobs at localhost:4040
+
+## Dataset
+- https://github.com/DataTalksClub/nyc-tlc-data
