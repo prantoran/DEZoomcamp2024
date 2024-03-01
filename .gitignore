@@ -1,6 +1,13 @@
 w1/docker/ny_taxi_postgres_data
 w1/docker/data_pgadmin
 
+w5_Spark/data
+w5_Spark/fhvhv
+w5_Spark/zones
+w5_Spark/*.csv
+w5_Spark/*.gz
+w5_Spark/*.csv.*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
