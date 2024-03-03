@@ -66,3 +66,29 @@ df.show()
 
 ## Dataset
 - https://github.com/DataTalksClub/nyc-tlc-data
+
+
+## Google Cloud Storage
+### Pushing to GCS
+```bash
+gcloud auth login
+gsutil -m cp -r pq/ gs://<bucketname>/pq
+```
+
+### Reading from GCS using Spark
+#### Setup Setup GCS Connector for Hadoop
+- Download [Cloud Storage connector for Hadoop 3.x](https://cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage#non-clusters).
+- Alternative is to download using gsutil.
+```bash
+cd ..
+mkdir lib
+cd lib/
+gsutil cp gs://hadoop-lib/gcs-connector-hadoop3-latest.jar gcs-connector-hadoop3-latest.jar
+```
+
+```bash
+BUCKET="hadoop-lib"
+KEY="gcs/gcs-connector-hadoop3-2.2.5.jar"
+URL="https://storage.googleapis.com/${BUCKET}/${KEY}"
+wget ${URL}
+```
