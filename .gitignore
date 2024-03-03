@@ -1,6 +1,7 @@
 w1/docker/ny_taxi_postgres_data
 w1/docker/data_pgadmin
 
+w5_Spark/tmp
 w5_Spark/data
 w5_Spark/fhvhv
 w5_Spark/zones
