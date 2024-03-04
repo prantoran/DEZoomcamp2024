@@ -92,3 +92,92 @@ KEY="gcs/gcs-connector-hadoop3-2.2.5.jar"
 URL="https://storage.googleapis.com/${BUCKET}/${KEY}"
 wget ${URL}
 ```
+
+## Local Cluster and Spark-Submit
+
+Creating a stand-alone cluster ([docs](https://spark.apache.org/docs/latest/spark-standalone.html)):
+
+```bash
+cd $SPARK_HOME
+./sbin/start-master.sh
+```
+
+Visit localhost:8080 in the browser.
+
+Start works using:
+
+```bash
+URL="spark://queen:7077"
+./sbin/start-worker.sh ${URL}
+```
+
+Turn the notebook into a script:
+
+```bash
+jupyter nbconvert --to=script 08_local_spark_cluster.ipynb
+```
+
+
+Connect to locally running spark cluster (1 executor + 1 worker):
+```bash
+import pyspark
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+parser = argparse.ArgumentParser()
+
+input_green = args.input_green
+input_yellow = args.input_yellow
+output = args.output
+
+
+spark = SparkSession.builder \
+    .master("spark://queen:7077") \
+    .appName('test') \
+    .getOrCreate()
+```
+
+
+### Spark Submit
+- For avoiding to hard-code master URL in code.
+
+```bash
+URL="spark://queen:7077"
+
+# https://spark.apache.org/docs/latest/submitting-applications.html
+spark-submit \
+    --master ${URL} \
+    08_local_spark_cluster.py \
+        --input_green "data/pq/green/2021/*" \
+        --input_yellow "data/pq/yellow/2021/*" \
+        --output=data/report-2021
+```
+
+## Stop all the workers and executors
+```bash
+cd $SPARK_HOME
+./sbin/stop-worker.sh
+./sbin/stop-master.sh
+```
+
+## Debugging
+- In case a port is unavailable, then kill the worker process and create a new worker
+- For finding the worker process id, run the create command which will indicate the running worker's process id.
+```bash
+URL="spark://queen:7077" 
+./sbin/start-worker.sh ${URL}             
+# org.apache.spark.deploy.worker.Worker running as process 88370.  Stop it first.
+
+kill 88370
+
+URL="spark://queen:7077" 
+./sbin/start-worker.sh ${URL}
+# starting org.apache.spark.deploy.worker.Worker, logging to /home/pinku/spark/spark-3.3.2-bin-hadoop3/logs/spark-pinku-org.apache.spark.deploy.worker.Worker-1-queen.out
+```
+Better:
+```bash
+cd $SPARK_HOME
+./sbin/stop-workers.sh
+```
+
+
