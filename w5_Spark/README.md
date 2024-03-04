@@ -153,14 +153,14 @@ spark-submit \
         --output=data/report-2021
 ```
 
-## Stop all the workers and executors
+#### Stop all the workers and executors
 ```bash
 cd $SPARK_HOME
 ./sbin/stop-worker.sh
 ./sbin/stop-master.sh
 ```
 
-## Debugging
+#### Debugging
 - In case a port is unavailable, then kill the worker process and create a new worker
 - For finding the worker process id, run the create command which will indicate the running worker's process id.
 ```bash
@@ -180,4 +180,37 @@ cd $SPARK_HOME
 ./sbin/stop-workers.sh
 ```
 
+## Running cluster in GCP using DataProc
 
+### Create cluster in GCP's DataProc
+### Upload script to GCS
+
+```bash
+gsutil cp 08_local_spark_cluster.py gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/code/08_local_spark_cluster.py
+```
+
+### Create job using the uploaded script
+```bash
+gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/code/08_local_spark_cluster.py
+```
+### Need to specify arguments for the script when creating a job
+
+```bash
+--input_green=gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/green/2021/*
+--input_yellow=gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/yellow/2021/*
+--output=gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/report-2021
+```
+
+### Submit job using Goggle Cloud SDK
+- Get the Equivalent REST
+- https://cloud.google.com/dataproc/docs/guides/submit-job#dataproc-submit-job-gcloud
+```bash
+gcloud dataproc jobs submit pyspark \
+    --cluster=cluster-ea84 \
+    --region=us-central1 \
+    gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/code/08_local_spark_cluster.py \
+    -- \
+        --input_green="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/green/2021/*/" \
+        --input_yellow="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/yellow/2021/*/" \
+        --output="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/report-2021"
+```
