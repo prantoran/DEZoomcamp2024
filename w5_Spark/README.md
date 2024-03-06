@@ -214,3 +214,24 @@ gcloud dataproc jobs submit pyspark \
         --input_yellow="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/yellow/2021/*/" \
         --output="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/report-2021"
 ```
+
+### Connecting BigQuery with PySpark
+- https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark
+- Schema from BigQuery: `trips_data_all.reports-2020`
+- Copy updated script to cloud storage
+```bash
+gsutil cp 09_spark_sql_bigquery.py gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/code/09_spark_sql_bigquery.py
+```
+- Submit job to Spark using Dataproc
+```bash
+gcloud dataproc jobs submit pyspark \
+    --cluster=cluster-ea84 \
+    --region=us-central1 \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
+    gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/code/09_spark_sql_bigquery.py \
+    -- \
+        --input_green="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/green/2020/*/" \
+        --input_yellow="gs://dtc_data_lake_de-zoomcamp-nytaxi-pinku/pq/yellow/2020/*/" \
+        --output="trips_data_all.reports-2020"
+
+```
